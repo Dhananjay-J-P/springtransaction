@@ -25,7 +25,7 @@ public class MyBankTest {
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 
-		ApplicationContext ctx=new ClassPathXmlApplicationContext("MyBank.xml");
+/*		ApplicationContext ctx=new ClassPathXmlApplicationContext("MyBank.xml");
 		
 		MyBankService service=ctx.getBean(MyBankService.class,"service");
 		
@@ -35,7 +35,7 @@ public class MyBankTest {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
+*/		
 	}
 
 }

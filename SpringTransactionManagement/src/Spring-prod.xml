@@ -1,0 +1,98 @@
+<?xml  version="1.0" encoding="UTF-8"?>
+<beans profile="prod" xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:jee="http://www.springframework.org/schema/jee" xmlns:lang="http://www.springframework.org/schema/lang"
+	xmlns:c="http://www.springframework.org/schema/c" xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:tx="http://www.springframework.org/schema/tx" xmlns:util="http://www.springframework.org/schema/util"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd
+        http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+        http://www.springframework.org/schema/jee http://www.springframework.org/schema/jee/spring-jee.xsd
+        http://www.springframework.org/schema/lang http://www.springframework.org/schema/lang/spring-lang.xsd
+        http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd
+        http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd">
+
+
+	<bean id="base" class="core.Base" p:name-ref="loader" p:quantity="1">
+
+
+	</bean>
+
+	<bean id="loader" factory-bean="core" factory-method="getLoader"></bean>
+	<alias name="base" alias="basealias" />
+
+	<bean class="core.ClassFactory" id="core"></bean>
+
+	<bean class="core.SingletonBean" id="singleTone" factory-method="getInstance"></bean>
+
+
+	<!-- Constructor based -->
+
+	<bean id="const" class="core.ConstructorBasedDependencyInjection"
+		c:_0="robin" c:_1="19" lazy-init="true">
+
+	</bean>
+
+	<bean id="collectionSample" class="core.CollectionSample">
+		<property name="set">
+			<set>
+				<value>Hi</value>
+				<value>This </value>
+				<value>is set</value>
+			</set>
+		</property>
+		<property name="list">
+			<list>
+				<value>Hi</value>
+				<value>This </value>
+				<null></null>
+			</list>
+		</property>
+		<property name="map">
+			<map>
+				<entry key="1" value="Ted"></entry>
+				<entry key="2" value="Robin"></entry>
+				<entry key="3" value="Barney"></entry>
+			</map>
+
+		</property>
+		<property name="props">
+			<props>
+				<prop key="5"> jack</prop>
+				<prop key="8"> Daniel</prop>
+			</props>
+		</property>
+	</bean>
+
+
+	<!-- Method injection -->
+	<bean id="single" class="core.SingletonScope">
+		<lookup-method name="getProto" bean="proto" />
+
+	</bean>
+	<bean id="proto" class="core.PrototypeScope" scope="prototype">
+
+	</bean>
+	<bean class="core.LifeCycleBeanPostProcessor" />
+	<bean class="core.LifeCycleBeanFactoryProcessor"></bean>
+	<bean id="life" class="core.LifeCycleManagement" init-method="init"
+		destroy-method="dest">
+		<property name="prop" value="${app.name.prod}"></property>
+	</bean>
+
+	<bean
+		class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+		<property name="locations">
+			<list>
+				<value>application.properties</value>
+
+			</list>
+
+		</property>
+	</bean>
+
+
+
+
+</beans>
